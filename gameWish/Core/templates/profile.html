@@ -3,6 +3,10 @@
 {% block content %}
 
 {% if profile %}
+    {% if profile.picture %}
+    <img src="{{profile.picture.url}}" alt="Imagen de perfil de {{profile.user.username}}" class="img-thumbnail">
+    <br/><br/>
+    {% endif %}
     <h1>Perfil de <span class='text-primary'>{{profile.user.username}}</span> </h1>
     {% if request.user.id == profile.user.id %}
     <a href="{% url 'edit_profile' %}" class='btn btn-outline-primary'>Editar Perfil</a>

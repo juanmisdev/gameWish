@@ -7,7 +7,7 @@ from django.shortcuts import redirect
 from django.contrib.auth.models import User
 from authentication.forms import UserForm
 from django.contrib.auth.forms import UserChangeForm
-from .forms import CustomUserChangeForm
+from .forms import CustomUserChangeForm, ProfilePictureForm
 
 # Create your views here.
 
@@ -27,15 +27,18 @@ def edit_profile(request):
         current_user = User.objects.get(id=request.user.id)
         profile = Profile.objects.get(user_id=request.user.id)
         form = CustomUserChangeForm(request.POST, instance=current_user)
+        picture_form = ProfilePictureForm(request.POST, request.FILES, instance=profile)
 
         if request.method == 'POST':
-            if form.is_valid():
+            if form.is_valid() and picture_form.is_valid():
                 form.save()
+                picture_form.save()
                 messages.success(request, 'Tu perfil ha sido actualizado.')
                 return redirect('profile', pk=request.user.id)
         else:
             form = CustomUserChangeForm(instance=current_user)
-        return render(request, 'edit_profile.html', {'form': form})
+            picture_form = ProfilePictureForm(request.POST, request.FILES, instance=profile)
+        return render(request, 'edit_profile.html', {'form': form , 'picture_form': picture_form})
     else:
         messages.error(request, 'Debes logearte para ver esta pagina.')
         return redirect('login')

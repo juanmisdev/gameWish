@@ -5,7 +5,18 @@ from django.contrib.auth.forms import UserCreationForm, UserChangeForm
 from django.shortcuts import redirect, render
 from .models import Profile
 
+class ProfilePictureForm(forms.ModelForm):
+    picture = forms.ImageField(label='Foto de Perfil', widget=forms.FileInput(attrs={'class': 'form-control'}))
+    class Meta:
+        model = Profile
+        fields = ('picture',)
 
+    def __init__(self, *args, **kwargs):
+        super(ProfilePictureForm, self).__init__(*args, **kwargs)
+
+        self.fields['picture'].widget.attrs['class'] = 'form-control'
+        self.fields['picture'].label = 'Foto de Perfil'
+        self.fields['picture'].help_text = '<span class="form-text text-muted"><small> Formatos: jpg, jpeg, png. Tamaño maximo: 2MB.</small></span>'
 
 
 class CustomUserChangeForm(UserChangeForm):
