@@ -1,0 +1,16 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+
+<div class='col-md-6 offset-md-3'>
+  <h1>Actualizar informacion</h1>
+  <form method="POST" action= '' enctype="multipart/form-data">
+    {% csrf_token %}
+      {{form.as_p}}
+      
+      <button type="submit" class="btn btn-primary">Actualizar</button>
+  </form>
+</div>
+
+
+{% endblock %}

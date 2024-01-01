@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if profile %}
+    <h1>Perfil de <span class='text-primary'>{{profile.user.username}}</span> </h1>
+    {% if request.user.id == profile.user.id %}
+    <a href="{% url 'edit_profile' %}" class='btn btn-outline-primary'>Editar Perfil</a>
+    <br/>
+    {% endif %}
+    <strong>Tu Wishlist:</strong>
+    <ul>
+        {% for game in profile.wishlist.all %}
+            <li>{{game}}</li>
+        {% endfor %}
+    </ul>
+
+{% else %}
+    <h1>Perfil no encontrado</h1>
+{% endif %}
+
+{% endblock %}

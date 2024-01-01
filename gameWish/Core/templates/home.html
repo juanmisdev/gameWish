@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <h1 class='text-center'>
+        Bienvenido a <span class='text-primary'>GameWish!</span>
+        <br/>
+        <small class='text-body-secondary'>Tu lista de deseos de videojuegos</small>
+    </h1>
+    <div class='container mt-5 pt-5 row'>
+        <div class='card col-md-5 bg-light border-0 shadow'>
+            <h2 class='card-title text-primary'>¿Qué es GameWish?</h2>
+                <div class='card-body'>
+                    <p class='card-text'>
+                        GameWish es una aplicación web que te permite crear una lista de deseos de videojuegos.
+                        <br/>
+                        <br/>
+                        Además, puedes compartir tu lista de deseos con tus amigos, para que sepan qué videojuegos te gustaría tener.
+                        <br/>
+                        <br/>
+                        Y mucho más!!!
+                    </p>
+                </div>
+
+        </div>
+        <div class='col-md-2 mt-3'>
+        </div>
+        
+        <div class='card col-md-5 bg-light border-0 shadow'>
+            <h2 class='card-title text-primary'>¿Cómo funciona?</h2>
+            <div class='card-body'>
+                <p class='card-text'>
+                
+                    Para empezar a usar GameWish, tienes que registrarte.
+                    <br/>
+                    <div class="d-grid gap-2 col-6 mx-auto">
+                        <a class="btn btn-primary"  href="{% url 'create_user' %}" role="button">Registrarse</a>
+                    </div>
+                    <br/>
+                    Una vez registrado, puedes añadir videojuegos a tu lista de deseos buscandolos en la
+                    barra de navegacion.
+                    <br/>
+                    <br/>
+                </p>   
+            </div>
+        </div>
+    </div>
+   
+        
+{% endblock %}
