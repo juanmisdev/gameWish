@@ -3,12 +3,17 @@
 
 
 <div class='col-md-6 offset-md-3'>
-  <h1>Registrase</h1>
-  <form method="post">
-    {% csrf_token %}
-      {{form.as_p}}
-      <button type="submit" class="btn btn-primary">Registrarse</button>
-  </form>
+  {% if user.is_authenticated %}
+    <h1>Ya estas registrado!!</h1>
+    <h2>Para ver tu perfil <a href="{% url 'profile' request.user.id %}">haz click aqui</a></h2>
+    {% else %}
+    <h1>Registrase</h1>
+    <form method="post">
+      {% csrf_token %}
+        {{form.as_p}}
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
+  {% endif %}
 </div>
 
 
