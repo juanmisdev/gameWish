@@ -25,5 +25,7 @@ urlpatterns = [
     # path('authentication', include('authentication.urls')),
     path('', include('Core.urls')),
     path('authentication/', include('authentication.urls')),
+    path('api/', include('api.urls')),
+    path('games/', include('Games.urls')),
     
 ]+ static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

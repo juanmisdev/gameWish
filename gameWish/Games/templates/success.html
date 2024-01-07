@@ -1,0 +1,24 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<div class="container mt-4">
+    <h1>Juegos encontrados:</h1>
+
+    {% if data %}
+        <div class="row">
+            {% for game in data %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game.cover.image_id }}.jpg" class="card-img-top" alt="{{ game.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ game.name }}</h5>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <p>No se encontraron juegos.</p>
+    {% endif %}
+</div>
+{% endblock %}
