@@ -1,0 +1,37 @@
+{% extends 'base.html' %} 
+{% block content %}
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Detalles del Juego</title>
+</head>
+<body>
+
+    <div class="container mt-4">
+        {% if game %}
+        {% for game_detail in game %}
+            <h1>{{ game_detail.name }}</h1>
+
+            <div class="card mb-4 w-50">
+                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game_detail.cover.image_id }}.jpg" class="card-img-top" alt="{{ game_detail.name }}">
+                <div class="card-body">
+                    <p class="card-text">{{ game_detail.summary }}</p>
+                    <!-- Otros detalles del juego -->
+                </div>
+            </div>
+        {% endfor %}
+
+            <!-- Puedes agregar más detalles del juego aquí -->
+
+        {% else %}
+            <p>No se encontró el juego.</p>
+        {% endif %}
+    </div>
+
+</body>
+</html>
+
+{% endblock %}
