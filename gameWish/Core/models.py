@@ -8,7 +8,7 @@ class Profile(models.Model):
     # One to one relationship with the User model
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     # Additional fields
-    wishlist = models.TextField(max_length=500, blank=True)
+    wishlist = models.TextField( blank=True) # Comma separated list of games
     bio = models.TextField(max_length=500, blank=True)
     picture = models.ImageField(upload_to='images/', blank=True, null=True)
 

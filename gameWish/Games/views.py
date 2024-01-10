@@ -3,8 +3,10 @@ from django.shortcuts import render
 # Create your views here.
 from django.shortcuts import render
 from rest_framework.response import Response
-from Games.models import Game
 import requests
+from Core.models import Profile
+from django.http import JsonResponse
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -84,3 +86,16 @@ def game_details(request, id):
             
     else:
         return render(request, 'error.html', {'message': 'Método no permitido'})
+
+
+@login_required
+def add_to_wishlist(request):
+    game_id = request.GET.get('game_id')
+    if game_id is not None:
+        profile = Profile.objects.get(user=request.user)
+        if str(game_id) not in profile.wishlist.split(','):
+            profile.wishlist += f'{game_id},'
+            profile.save()
+        return JsonResponse({'status': 'success'})
+    else:
+        return JsonResponse({'status': 'error', 'message': 'Invalid game ID'})

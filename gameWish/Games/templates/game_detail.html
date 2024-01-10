@@ -1,4 +1,4 @@
-{% extends 'base.html' %} 
+{% extends 'base.html' %}
 {% block content %}
 
 <!DOCTYPE html>
@@ -12,24 +12,46 @@
 
     <div class="container mt-4">
         {% if game %}
-        {% for game_detail in game %}
+        <div class="row">
+            {% for game_detail in game %}
             <h1>{{ game_detail.name }}</h1>
+                <div class="col-md-8">
+                    
 
-            <div class="card mb-4 w-50">
-                <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game_detail.cover.image_id }}.jpg" class="card-img-top" alt="{{ game_detail.name }}">
-                <div class="card-body">
-                    <p class="card-text">{{ game_detail.summary }}</p>
-                    <!-- Otros detalles del juego -->
+                    <div class="card w-100 mb-4">
+                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game_detail.cover.image_id }}.jpg" class="card-img-top" alt="{{ game_detail.name }}">
+                        <div class="card-body">
+                            <p class="card-text">{{ game_detail.summary }}</p>
+                            <!-- Otros detalles del juego -->
+                        </div>
+                    </div>
                 </div>
-            </div>
-        {% endfor %}
 
-            <!-- Puedes agregar más detalles del juego aquí -->
+                <!-- Button to add the game to the wishlist -->
+                <div class="col-md-4 d-flex align-items-start justify-content-end">
+                    <button class="btn btn-primary" onclick="addToWishlist('{{ game_detail.id }}, {{game_detail.name}}')">Agregar a la Lista de Deseos</button>
+                </div>
+            {% endfor %}
+        </div>
 
         {% else %}
             <p>No se encontró el juego.</p>
         {% endif %}
     </div>
+
+    <script>
+        function addToWishlist(game_id, game_name) {
+            fetch('/games/add_to_wishlist/?game_id=' + game_id)
+            .then(response => response.json())
+            .then(data => {
+                if (data.status === 'success') {
+                    alert('Se ha agregado el juego a la lista de deseos: ' + game_name);
+                } else {
+                    alert('Error: ' + data.message);
+                }
+            });
+        }
+    </script>
 
 </body>
 </html>

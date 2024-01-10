@@ -8,6 +8,7 @@ from django.contrib.auth.models import User
 from authentication.forms import UserForm
 from django.contrib.auth.forms import UserChangeForm
 from .forms import CustomUserChangeForm, ProfilePictureForm
+import requests
 
 # Create your views here.
 
@@ -16,8 +17,48 @@ def home(request):
 
 def profile(request, pk):
     if request.user.is_authenticated:
+
         profile = Profile.objects.get(user_id=pk)
-        return render(request, 'profile.html', {'profile': profile})
+        # Obtener los juegos de la wishlist:
+        wishlist = profile.wishlist
+
+        if wishlist:
+            games = wishlist.split(',')
+            games = [int(game) for game in games if game.isdigit()]
+
+            # Obtener los juegos de la api:
+            api_token = 'rllg6x3mwy2nlhuo9dgppr0tkeoqe3'
+            client_id = 'oh1a4v2eabzyogqacl9a5vynyhrai6'
+            
+            # Define the IGDB API endpoint
+            api_url_game = 'https://api.igdb.com/v4/games'
+            query = request.GET.get('query','')
+
+            # Define the parameters for the API request
+            params_game = {
+                'fields': f'id, name, cover.image_id, summary; where id = ({", ".join(map(str, games))})',  # Specify the fields you want to retrieve
+                'limit': '200' # Adjust the limit as needed
+            }
+
+            # Set up headers with your API key
+            headers = {
+                'Client-ID': client_id,
+                'Authorization': f'Bearer {api_token}',
+            }
+
+            # Make the API request
+            response_games = requests.post(api_url_game, headers=headers, params=params_game)
+            # response_cover = requests.post(api_url_cover, headers=headers, params=params_cover)
+
+            # Check if the request was successful (status code 200)
+            if response_games.status_code == 200:
+                # Parse the JSON response
+                data_games = response_games.json()
+
+            return render(request, 'profile.html', {'profile': profile, 'data': data_games})
+        
+        else: # Si no hay juegos en la wishlist, se renderiza la pagina sin los juegos
+            return render(request, 'profile.html', {'profile': profile})
     else:
         messages.error(request, 'Debes logearte para ver esta pagina.')
         return redirect('login')
