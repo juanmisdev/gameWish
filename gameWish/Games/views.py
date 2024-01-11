@@ -62,7 +62,7 @@ def game_details(request, id):
     
             # Define the parameters for the API request
             params_game = {
-                'fields': f'id, name, cover.image_id, summary; where id = {id}',  # Specify the fields you want to retrieve
+                'fields': f'id, name, cover.image_id, summary, total_rating, platforms; where id = {id}',  # Specify the fields you want to retrieve
             }
     
             # Set up headers with your API key
@@ -79,7 +79,25 @@ def game_details(request, id):
             if response_game.status_code == 200:
                 # Parse the JSON response
                 data_game = response_game.json()
-                return render(request, 'game_detail.html', {'game': data_game,})
+                data_game[0]['total_rating'] = round(data_game[0]['total_rating']/10, 2) # Redondeo a 2 decimales
+
+                # Obtener el nombre de las plataformas:
+                platforms = data_game[0]['platforms']
+                platforms = [int(platform) for platform in platforms]
+                api_url_platform = 'https://api.igdb.com/v4/platforms'
+                params_platform = {
+                    'fields': f'name; where id = ({", ".join(map(str, platforms))})',  # Specify the fields you want to retrieve
+                }
+                response_platform = requests.post(api_url_platform, headers=headers, params=params_platform)
+                if response_platform.status_code == 200:
+                    data_platform = response_platform.json()
+                    data_game[0]['platforms'] = data_platform
+                    return render(request, 'game_detail.html', {'game': data_game,})
+                else:
+                    return render(request, 'error.html', {'message': f'Error obteniendo datos: {response_platform.status_code}'})
+                
+                
+                
             else:
                 # Display an error message if the request was unsuccessful
                 return render(request, 'error.html', {'message': f'Error obteniendo datos: {response_game.status_code}'})

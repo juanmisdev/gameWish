@@ -1,59 +1,76 @@
-{% extends 'base.html' %}
-{% block content %}
+{% extends 'base.html' %} {% block content %}
 
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Detalles del Juego</title>
-</head>
-<body>
-
+  </head>
+  <body>
     <div class="container mt-4">
-        {% if game %}
-        <div class="row">
-            {% for game_detail in game %}
-            <h1>{{ game_detail.name }}</h1>
-                <div class="col-md-8">
-                    
-
-                    <div class="card w-100 mb-4">
-                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game_detail.cover.image_id }}.jpg" class="card-img-top" alt="{{ game_detail.name }}">
-                        <div class="card-body">
-                            <p class="card-text">{{ game_detail.summary }}</p>
-                            <!-- Otros detalles del juego -->
-                        </div>
-                    </div>
+      {% if game %}
+      <div class="row justify-content-center align-items-center">
+        {% for game_detail in game %}
+        <h1 class='text-primary'>{{ game_detail.name }}</h1>
+        <div class="col-md-7">
+            <div class="card mb-4 bg-light border-0 shadow" style="max-width: 528px;">
+                <img
+                    src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game_detail.cover.image_id }}.jpg"
+                    class="card-img-top"
+                    alt="{{ game_detail.name }}"
+                    style="max-height: 748px; width: auto;"
+                />
+                <div class="card-body">
+                    <p class="card-text">{{ game_detail.summary }}</p>
                 </div>
-
-                <!-- Button to add the game to the wishlist -->
-                <div class="col-md-4 d-flex align-items-start justify-content-end">
-                    <button class="btn btn-primary" onclick="addToWishlist('{{ game_detail.id }}, {{game_detail.name}}')">Agregar a la Lista de Deseos</button>
-                </div>
-            {% endfor %}
+            </div>
         </div>
 
-        {% else %}
-            <p>No se encontró el juego.</p>
-        {% endif %}
+        
+        <div class="col-md-5 d-felx justify-content-center align-items-center">
+          <div class="card bg-light mb-3 border-0 shadow" style="max-width: 18rem">
+            <div class="card-header">Detalles del juego:</div>
+            <div class="card-body">
+              <h5 class="card-title">{{ game_detail.name }}</h5>
+              <p class="card-text">Puntuacion: {{ game_detail.total_rating }}</p>
+              <p class="card-text">Plataformas:</p>
+              <ul>
+                {% for platform in game_detail.platforms %}
+                <li>{{ platform.name }}</li>
+                {% endfor %}
+              </ul>
+              <button
+                class="btn btn-primary mt-3"
+                onclick="addToWishlist('{{ game_detail.id }}')"
+              >
+                Agregar a la Lista de Deseos
+              </button>
+            </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+
+      {% else %}
+      <p>No se encontró el juego.</p>
+      {% endif %}
     </div>
 
     <script>
-        function addToWishlist(game_id, game_name) {
-            fetch('/games/add_to_wishlist/?game_id=' + game_id)
-            .then(response => response.json())
-            .then(data => {
-                if (data.status === 'success') {
-                    alert('Se ha agregado el juego a la lista de deseos: ' + game_name);
-                } else {
-                    alert('Error: ' + data.message);
-                }
-            });
-        }
+      function addToWishlist(game_id) {
+        fetch("/games/add_to_wishlist/?game_id=" + game_id)
+          .then((response) => response.json())
+          .then((data) => {
+            if (data.status === "success") {
+              alert("Se ha agregado el juego a la lista de deseos ");
+            } else {
+              alert("Error: " + data.message);
+            }
+          });
+      }
     </script>
-
-</body>
+  </body>
 </html>
 
 {% endblock %}

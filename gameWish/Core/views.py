@@ -54,6 +54,7 @@ def profile(request, pk):
             if response_games.status_code == 200:
                 # Parse the JSON response
                 data_games = response_games.json()
+                
 
             return render(request, 'profile.html', {'profile': profile, 'data': data_games})
         

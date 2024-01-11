@@ -8,34 +8,57 @@
             {% if profile %}
                 {% if request.user.id == profile.user.id %}
                     <br/>
+                    {% if profile.picture %}
+                        <img src="{{profile.picture.url}}" alt="Imagen de perfil de {{profile.user.username}}" class="img-thumbnail">
+                        <br/><br/>
+                    {% endif %}
+                    <a href="{% url 'edit_profile' %}" class='btn btn-outline-primary'>Editar Perfil</a>
+                    <button id="share-btn" class='btn btn-outline-primary'>Compartir Perfil</button>
                 {% endif %}
-                {% if profile.picture %}
-                    <img src="{{profile.picture.url}}" alt="Imagen de perfil de {{profile.user.username}}" class="img-thumbnail">
-                    <br/><br/>
-                {% endif %}
-                <a href="{% url 'edit_profile' %}" class='btn btn-outline-primary'>Editar Perfil</a>
             {% else %}
                 <h1>Perfil no encontrado</h1>
             {% endif %}
         </div>
 
         {% if profile %}
-            <div class="col-md-7">
-                <h3>Tu <span class='text-primary'>wishlist:<span/></h3>
-                {% for game in data %}
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
-                            <a href="{% url 'game_detail' game.id %}">
-                            <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game.cover.image_id }}.jpg" class="card-img-top" alt="{{ game.name }}">
-                        </a>
-                            <div class="card-body">
-                                <h5 class="card-title">{{ game.name }}</h5>
-                            </div>
-                        </div>
+    <div class="col-md-7">
+        <h3>Tu <span class='text-primary'>wishlist:<span/></h3>
+        {% for game in data %}
+            {% if forloop.counter0|divisibleby:3 %}
+                {% if not forloop.first %}
+                    </div> <!-- Close the previous row -->
+                {% endif %}
+                <div class="row"> <!-- Start a new row -->
+            {% endif %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <a href="{% url 'game_detail' game.id %}">
+                        <img src="https://images.igdb.com/igdb/image/upload/t_cover_big_2x/{{ game.cover.image_id }}.jpg" class="card-img-top" alt="{{ game.name }}">
+                    </a>
+                    <div class="card-body">
+                        <h5 class="card-title">{{ game.name }}</h5>
                     </div>
-                {% endfor %}
+                </div>
             </div>
-        {% endif %}
+            {% if forloop.last %}
+                </div> <!-- Close the last row -->
+            {% endif %}
+        {% endfor %}
+    </div>
+{% endif %}
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+document.getElementById('share-btn').addEventListener('click', function() {
+    var text = "Mira mi perfil de GameWish: " + window.location.href;
+    navigator.clipboard.writeText(text).then(function() {
+        alert('¡Perfil copiado al portapapeles!');
+    }).catch(function() {
+        alert('Hubo un error al copiar el perfil al portapapeles.');
+    });
+});
+</script>
 {% endblock %}
