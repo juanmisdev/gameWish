@@ -74,7 +74,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'gameWish.wsgi.application'
+WSGI_APPLICATION = 'gameWish.wsgi.app'
 
 
 # Database
