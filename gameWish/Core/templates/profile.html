@@ -8,10 +8,8 @@
             {% if profile %}
                 {% if request.user.id == profile.user.id %}
                     <br/>
-                    {% if profile.picture %}
-                        <img src="{{profile.picture.url}}" alt="Imagen de perfil de {{profile.user.username}}" class="img-thumbnail">
+                        <img src="/media/images/generic_picture.jpg" alt="Imagen de perfil de {{profile.user.username}}" class="img-thumbnail">
                         <br/><br/>
-                    {% endif %}
                     <a href="{% url 'edit_profile' %}" class='btn btn-outline-primary'>Editar Perfil</a>
                     <button id="share-btn" class='btn btn-outline-primary'>Compartir Perfil</button>
                 {% endif %}
