@@ -35,6 +35,10 @@
                     </a>
                     <div class="card-body">
                         <h5 class="card-title">{{ game.name }}</h5>
+                        <form method="post" action="{% url 'remove_from_wishlist' game.id %}">
+                            {% csrf_token %}
+                            <button type="submit" class="btn btn-outline-danger">Ya lo jugué</button>
+                        </form>
                     </div>
                 </div>
             </div>

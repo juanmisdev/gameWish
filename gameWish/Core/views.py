@@ -9,6 +9,7 @@ from authentication.forms import UserForm
 from django.contrib.auth.forms import UserChangeForm
 from .forms import CustomUserChangeForm, ProfilePictureForm
 import requests
+from django.shortcuts import get_object_or_404
 
 # Create your views here.
 
@@ -85,3 +86,22 @@ def edit_profile(request):
         messages.error(request, 'Debes logearte para ver esta pagina.')
         return redirect('login')
    
+def remove_from_wishlist(request, game_id):
+    # Get the user's profile
+    profile = get_object_or_404(Profile, user_id=request.user.id)
+
+    # Convert the wishlist into a list
+    wishlist = profile.wishlist.split(',')
+
+    # Remove the game ID from the wishlist
+    if str(game_id) in wishlist:
+        wishlist.remove(str(game_id))
+
+    # Convert the wishlist back into a string
+    profile.wishlist = ','.join(wishlist)
+
+    # Save the profile
+    profile.save()
+
+    # Redirect to the profile page
+    return redirect('profile', pk=request.user.id)
