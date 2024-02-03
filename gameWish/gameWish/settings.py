@@ -83,9 +83,9 @@ WSGI_APPLICATION = 'gameWish.wsgi.app'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'HOST': 'db.qvwxyfaqkldglypxqidi.supabase.co',
+        'HOST': 'aws-0-us-west-1.pooler.supabase.com',
         'NAME': 'postgres',
-        'USER': 'postgres',
+        'USER': 'postgres.qvwxyfaqkldglypxqidi',
         'PORT': '5432',
         'PASSWORD': 'carnitaseca1',
     }
