@@ -26,6 +26,8 @@ def fetch_game_data(request):
     headers = {
         'Client-ID': client_id,
         'Authorization': f'Bearer {api_token}',
+        'grant_type':'client_credentials',
+
     }
 
     # Make the API request

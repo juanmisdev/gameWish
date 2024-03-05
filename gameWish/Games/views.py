@@ -14,7 +14,7 @@ def fetch_games_data(request):
     
     if request.method == 'GET':
 
-        api_token = 'rllg6x3mwy2nlhuo9dgppr0tkeoqe3'
+        api_token = '8l9mgsu53ovhckv2ktpuh7f9v0bujc'
         client_id = 'oh1a4v2eabzyogqacl9a5vynyhrai6'
         
         # Define the IGDB API endpoint
@@ -32,6 +32,7 @@ def fetch_games_data(request):
         headers = {
             'Client-ID': client_id,
             'Authorization': f'Bearer {api_token}',
+
         }
 
         # Make the API request
@@ -53,7 +54,7 @@ def fetch_games_data(request):
 def game_details(request, id):
     if request.method == 'GET':
             
-            api_token = 'rllg6x3mwy2nlhuo9dgppr0tkeoqe3'
+            api_token = '8l9mgsu53ovhckv2ktpuh7f9v0bujc'
             client_id = 'oh1a4v2eabzyogqacl9a5vynyhrai6'
             
             # Define the IGDB API endpoint
@@ -69,6 +70,8 @@ def game_details(request, id):
             headers = {
                 'Client-ID': client_id,
                 'Authorization': f'Bearer {api_token}',
+                'grant_type':'client_credentials',
+
             }
     
             # Make the API request
