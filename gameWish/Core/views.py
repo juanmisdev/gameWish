@@ -28,7 +28,7 @@ def profile(request, pk):
             games = [int(game) for game in games if game.isdigit()]
 
             # Obtener los juegos de la api:
-            api_token = '8l9mgsu53ovhckv2ktpuh7f9v0bujc'
+            api_token = 'srqa03mld4byy83shbpnwymwlg9mb7'
             client_id = 'oh1a4v2eabzyogqacl9a5vynyhrai6'
             
             # Define the IGDB API endpoint
