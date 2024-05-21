@@ -9,7 +9,7 @@ import requests
 
 def fetch_game_data(request):
       # Replace YOUR_API_KEY with your actual IGDB API key
-    api_token = 'rllg6x3mwy2nlhuo9dgppr0tkeoqe3'
+    api_token = 'srqa03mld4byy83shbpnwymwlg9mb7'
     client_id = 'oh1a4v2eabzyogqacl9a5vynyhrai6'
     
     # Define the IGDB API endpoint
