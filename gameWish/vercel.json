@@ -8,7 +8,7 @@
         }
       },
       {
-        "src": "/gameWish/asgi.py",
+        "src": "/gameWish/wsgi.py",
         "use": "@vercel/python",
         "config": { "maxLambdaSize": "15mb" }
       }
@@ -16,7 +16,7 @@
     "routes": [
       {
         "src": "/(.*)",
-        "dest": "gameWish/asgi.py"
+        "dest": "gameWish/wsgi.py"
       },
       {
         "src": "/static/(.*)",
